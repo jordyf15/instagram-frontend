@@ -4,6 +4,87 @@ import PasswordInput from '../components/PasswordInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../redux/slices/user';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+const Main = styled.main`
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const UpperContainer = styled.div`
+  margin-top: 70px;
+  text-align: center;
+  max-width:270px;
+  @media (min-width: 450px) {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    padding: 35px 40px;
+    box-sizing: content-box;
+  }
+`;
+
+const RegisterInfo = styled.p`
+  font-weight: bold;
+  color: #8e8e8e;
+  font-size: 1.1em;
+`;
+
+const SignupBtn = styled.button`
+  background-color: #0095f6;
+  color: white;
+  font-weight: bold;
+  border:none;
+  font-size: 0.9em;
+  width: 100%;
+  padding: 7px 0;
+  border-radius:5px;
+`;
+
+const SignUpBtnDisabled = styled.button`
+  background-color: #afdcf9;
+  color: white;
+  font-weight: bold;
+  border:none;
+  font-size: 0.9em;
+  width: 100%;
+  padding: 7px 0;
+  border-radius:5px;
+`;
+
+const RegisterTerms = styled.p`
+  color: #8e8e8e;
+  font-size: 0.75em;
+  margin-top: 20px;
+`;
+
+const LowerContainer = styled.div`
+  margin-top: 60px;
+  font-size: 0.9em;
+  @media (min-width: 450px) {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    padding: 10px 40px;
+    max-width: 270px;
+    width: 100%;
+    box-sizing: content-box;
+    text-align: center;
+  }
+`;
+
+const LoginLink = styled.span`
+  color: #0095f6;
+`;
+
+const Title = styled.h1`
+  margin: 0;
+`;
+
+const RegisterError = styled.p`
+  color: #ee2d3e;
+  font-size: 0.87em;
+`;
+
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -14,94 +95,98 @@ const RegisterPage = () => {
   const [fullnameError, setFullnameError] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [registerError, setRegisterError] = useState('');
+  const [validSubmit, setValidSubmit] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
 
   useEffect(() => {
     if(isLoggedIn) navigate('/');
-  }, [isLoggedIn, navigate])
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    setValidSubmit(!usernameError && !fullnameError && !emailError && !passwordError && 
+      username !== '' && password !== '' && email !== '' && fullname !== '');
+  }, [usernameError, fullnameError, emailError, passwordError, username, password, email, fullname]);
 
   const handleChangeEmail = (newEmail) =>{
+    let newEmailError = '';
+    if(newEmail === '') {
+      newEmailError = 'Email must not be empty';
+    }
+    setEmailError(newEmailError);
     setEmail(newEmail);
   }
 
   const handleChangeFullname = (newFullname) => {
+    let newFullnameError = '';
+    if(newFullname === '') {
+      newFullnameError = 'Fullname must not be empty'
+    } else if(newFullname.length<1 || newFullname.length>30) {
+      newFullnameError = 'Fullname must be between 1 and 30 characters';
+    }
+    setFullnameError(newFullnameError);
     setFullname(newFullname);
   }
 
   const handleChangeUsername = (newUsername) => {
+    let newUsernameError = '';
+    if(newUsername === '') {
+      newUsernameError = 'Username must not be empty';
+    } else if(newUsername.length <3 || newUsername.length>30) {
+      newUsernameError = 'Username must be between 3 and 30 characters';
+    }
+    setUsernameError(newUsernameError);
     setUsername(newUsername);
   }
 
   const handleChangePassword = (newPassword) => {
-    setPassword(newPassword);
-  }
-
-  const handleValidation = () => {
-    let newEmailError = '';
     let newPasswordError = '';
-    let newUsernameError = '';
-    let newFullnameError = '';
-    // username
-    if(username === ''){
-      newUsernameError = 'Username must not be empty';
-    }else if(username.length <3 || username.length>30) {
-      newUsernameError = 'Username must be between 3 and 30 characters';
-    }
-    // email
-    if(email === '') {
-      newEmailError = 'Email must not be empty';
-    }
-    // password
-    if(password === '') {
+    if(newPassword === '') {
       newPasswordError = 'Password must not be empty';
     }
-    // fullname
-    if(fullname === '') {
-      newFullnameError = 'Fullname must not be empty'
-    } else if(fullname.length<1 || fullname.length>30) {
-      newFullnameError = 'Fullname must be between 1 and 30 characters';
-    }
-    setFullnameError(newFullnameError);
-    setEmailError(newEmailError);
     setPasswordError(newPasswordError);
-    setUsernameError(newUsernameError);
-    return !newEmailError && !newFullnameError && !newUsernameError && !newPasswordError;
+    setPassword(newPassword);
   }
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (handleValidation()) {
-      dispatch(register({username: username, email: email, fullname: fullname, password: password}))
+    if (validSubmit) {
+      dispatch(register({username, email, fullname, password}))
         .unwrap()
         .then(() => {
+          setRegisterError('');
           navigate('/login');
         })
         .catch((err) => {
-          setUsernameError(err.username);
+          setRegisterError(err);
         });
     }
   }
   
   return (
-    <main>
-      <div id='upper-container'>
-        <h1>Instagram</h1>
-        <p id='register-info'>Sign up to see photos and videos from your friends.</p>
+    <Main>
+      <UpperContainer>
+        <Title>Instagram</Title>
+        <RegisterInfo>Sign up to see photos and videos from your friends.</RegisterInfo>
         <form onSubmit={handleSubmit}>
-          <TextInput error={emailError} label={"Email"} value={email} handleChange={handleChangeEmail} placeholder="Email"/>
-          <TextInput error={fullnameError} label={"Fullname"} value={fullname} handleChange={handleChangeFullname} placeholder="Fullname"/>
-          <TextInput error={usernameError} label={"Username"} value={username} handleChange={handleChangeUsername} placeholder="Username"/>
-          <PasswordInput error={passwordError} label={"Password"} value={password} handleChange={handleChangePassword} placeholder="Password"/>
-          <button id='signup-btn' type='submit'>Sign up</button>
+          <TextInput error={emailError} label={"Email"} value={email} handleChange={handleChangeEmail}/>
+          <TextInput error={fullnameError} label={"Full Name"} value={fullname} handleChange={handleChangeFullname}/>
+          <TextInput error={usernameError} label={"Username"} value={username} handleChange={handleChangeUsername} />
+          <PasswordInput error={passwordError} label={"Password"} value={password} handleChange={handleChangePassword}/>
+          {
+            validSubmit?<SignupBtn type='submit'>Sign up</SignupBtn>
+            :<SignUpBtnDisabled type='submit' disabled>Sign up</SignUpBtnDisabled>
+          }
         </form>
-        <p id='register-terms'>By signing up, you agree to our <strong>Terms</strong>, <strong>Data Policy</strong> and <strong>Cookies Policy</strong>.</p>
-      </div>
-      <div id='lower-container'>
-        <p>Have an Account? <Link className='router-link' to="/login"><span id='login-link'>Log In</span></Link></p>
-      </div>
-    </main>
+        <RegisterError>{registerError}</RegisterError>
+        <RegisterTerms>By signing up, you agree to our <strong>Terms</strong>, <strong>Data Policy</strong> and <strong>Cookies Policy</strong>.</RegisterTerms>
+      </UpperContainer>
+      <LowerContainer>
+        <p>Have an Account? <Link className='router-link' to="/login"><LoginLink id='login-link'>Log In</LoginLink></Link></p>
+      </LowerContainer>
+    </Main>
   )
 };
 

@@ -9,53 +9,25 @@ html{
 
 #root{
   min-height: 100vh;
-  min-width: 100vh;
+  min-width: 100vw;
   background-color: #fafafa;
   font-family: 'Roboto';
 }
 
-main {
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-}
-h1 {
-  margin: 0;
-}
-#upper-container{
-  /* background-color: pink; */
-  margin-top: 70px;
-  text-align: center;
-  max-width:270px;
-}
-#lower-container{
-  margin-top: 60px;
-  font-size: 0.9em;
-}
-#register-info{
-  font-weight: bold;
-  color: #8e8e8e;
-  font-size: 1.1em;
-}
-#register-terms{
-  color: #8e8e8e;
-  font-size: 0.75em;
-  margin-top: 20px;
-}
-#signup-btn{
-  background-color: #0095f6;
-  color: white;
-  font-weight: bold;
-  border:none;
-  font-size: 0.9em;
-  width: 100%;
-  padding: 7px 0;
-  border-radius:5px;
-}
-#login-link {
-  color: #0095f6;
-  text-decoration: none;
-}
 .router-link{
   text-decoration: none;
+}
+.input-error {
+  color: #ee2d3e;
+  position: absolute;
+  font-size: 1.4em;
+  right: 10px;
+  top: 7px;
+}
+.input-success {
+  color: #a6a8ab;
+  position: absolute;
+  font-size: 1.4em;
+  right: 10px;
+  top: 7px;
 }

@@ -10,7 +10,7 @@ export const register = createAsyncThunk(
       console.log(response);
     } catch (error) {
       if (error.response.status === 409) {
-        return thunkAPI.rejectWithValue({username: error.response.data.message});
+        return thunkAPI.rejectWithValue(error.response.data.message);
       }
       return thunkAPI.rejectWithValue();
     }
