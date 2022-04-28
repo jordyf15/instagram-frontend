@@ -1,38 +1,61 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+*{
+  box-sizing: border-box;
+}
+html{
+  padding: 0;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+#root{
   min-height: 100vh;
-  display: flex;
+  min-width: 100vh;
+  background-color: #fafafa;
+  font-family: 'Roboto';
+}
+
+main {
+  display:flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+h1 {
+  margin: 0;
+}
+#upper-container{
+  /* background-color: pink; */
+  margin-top: 70px;
+  text-align: center;
+  max-width:270px;
+}
+#lower-container{
+  margin-top: 60px;
+  font-size: 0.9em;
+}
+#register-info{
+  font-weight: bold;
+  color: #8e8e8e;
+  font-size: 1.1em;
+}
+#register-terms{
+  color: #8e8e8e;
+  font-size: 0.75em;
+  margin-top: 20px;
+}
+#signup-btn{
+  background-color: #0095f6;
   color: white;
+  font-weight: bold;
+  border:none;
+  font-size: 0.9em;
+  width: 100%;
+  padding: 7px 0;
+  border-radius:5px;
 }
-
-.App-link {
-  color: #61dafb;
+#login-link {
+  color: #0095f6;
+  text-decoration: none;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.router-link{
+  text-decoration: none;
 }
