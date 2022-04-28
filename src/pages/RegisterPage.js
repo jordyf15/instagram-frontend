@@ -3,7 +3,7 @@ import TextInput from '../components/TextInput';
 import PasswordInput from '../components/PasswordInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../redux/slices/user';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 const Main = styled.main`
@@ -99,11 +99,6 @@ const RegisterPage = () => {
   const [validSubmit, setValidSubmit] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
-
-  useEffect(() => {
-    if(isLoggedIn) navigate('/');
-  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     setValidSubmit(!usernameError && !fullnameError && !emailError && !passwordError && 
