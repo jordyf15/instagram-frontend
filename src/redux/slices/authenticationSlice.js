@@ -13,12 +13,7 @@ export const login  = createAsyncThunk(
       thunkAPI.dispatch(setUser(response.data.user));
       return response.data;
     } catch(error) {
-      if(error.response.status === 404) {
-        return thunkAPI.rejectWithValue({username: error.response.data.message});
-      } else if(error.response.status === 403) {
-        return thunkAPI.rejectWithValue({password: error.response.data.message});
-      }
-      return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
 );

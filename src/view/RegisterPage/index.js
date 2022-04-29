@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import TextInput from '../components/TextInput';
-import PasswordInput from '../components/PasswordInput';
 import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../redux/slices/user';
-import { useDispatch } from 'react-redux';
+import { register } from '../../redux/slices/user';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import TextInput from './TextInput';
+import PasswordInput from './PasswordInput';
 
 const Main = styled.main`
   display:flex;
@@ -61,6 +61,7 @@ const RegisterTerms = styled.p`
 const LowerContainer = styled.div`
   margin-top: 60px;
   font-size: 0.9em;
+  color: #8e8e8e;
   @media (min-width: 450px) {
     background-color: white;
     border: 1px solid #dbdbdb;
@@ -99,6 +100,12 @@ const RegisterPage = () => {
   const [validSubmit, setValidSubmit] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
+
+  useEffect(() => {
+    if(isLoggedIn) navigate('/');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setValidSubmit(!usernameError && !fullnameError && !emailError && !passwordError && 
