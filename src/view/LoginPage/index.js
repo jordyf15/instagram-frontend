@@ -73,6 +73,10 @@ const RegisterLink = styled.span`
 const LoginForm = styled.form`
   margin-top: 35px;
 `;
+
+const RouterLink = styled(Link)`
+  text-decoration: none;
+`;
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -126,7 +130,7 @@ const LoginPage = () => {
           }
         </LoginForm>
         <LoginError>{loginError}</LoginError>
-        <RegisterOffer>Don't have an account? <Link className='router-link' to='/register'><RegisterLink id='register-link'>Sign up</RegisterLink></Link></RegisterOffer>
+        <RegisterOffer>Don't have an account? <RouterLink to='/register'><RegisterLink id='register-link'>Sign up</RegisterLink></RouterLink></RegisterOffer>
       </Container>
     </Main>
   )

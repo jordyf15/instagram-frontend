@@ -3,6 +3,7 @@ import userReducer from './slices/user';
 import messageReducer from './slices/message';
 import authenticationReducer from './slices/authenticationSlice';
 import commentReducer from './slices/commentSlice';
+import postReducer from './slices/postSlice';
 
 export default configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export default configureStore({
     message: messageReducer,
     authentication: authenticationReducer,
     comment: commentReducer,
+    post: postReducer,
   },
   devTools: true,
 });

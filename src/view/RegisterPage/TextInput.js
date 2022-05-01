@@ -32,6 +32,22 @@ const InputBox = styled.input`
   margin-bottom: 10px;
 `;
 
+const InputErrorIcon = styled(FontAwesomeIcon)`
+  color: #ee2d3e;
+  position: absolute;
+  font-size: 1.4em;
+  right: 10px;
+  top: 7px;
+`;
+
+const InputSuccessIcon = styled(FontAwesomeIcon)`
+  color: #a6a8ab;
+  position: absolute;
+  font-size: 1.4em;
+  right: 10px;
+  top: 7px;
+`;
+
 const TextInput = ({value, handleChange, error, label}) => {
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
@@ -45,8 +61,8 @@ const TextInput = ({value, handleChange, error, label}) => {
       {
         focused?null
         :error
-        ?<FontAwesomeIcon className='input-error' icon={faCircleXmark}/>
-        :value? <FontAwesomeIcon className='input-success' icon={faCircleCheck}/>
+        ?<InputErrorIcon icon={faCircleXmark}/>
+        :value? <InputSuccessIcon icon={faCircleCheck}/>
         :null
       }
     </InputContainer>

@@ -86,6 +86,9 @@ const RegisterError = styled.p`
   font-size: 0.87em;
 `;
 
+const RouterLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -186,7 +189,7 @@ const RegisterPage = () => {
         <RegisterTerms>By signing up, you agree to our <strong>Terms</strong>, <strong>Data Policy</strong> and <strong>Cookies Policy</strong>.</RegisterTerms>
       </UpperContainer>
       <LowerContainer>
-        <p>Have an Account? <Link className='router-link' to="/login"><LoginLink id='login-link'>Log In</LoginLink></Link></p>
+        <p>Have an Account? <RouterLink to="/login"><LoginLink id='login-link'>Log In</LoginLink></RouterLink></p>
       </LowerContainer>
     </Main>
   )

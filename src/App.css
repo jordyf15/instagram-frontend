@@ -17,6 +17,7 @@ html{
 .router-link{
   text-decoration: none;
 }
+
 .input-error {
   color: #ee2d3e;
   position: absolute;

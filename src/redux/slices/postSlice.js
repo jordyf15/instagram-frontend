@@ -77,6 +77,9 @@ const postSlice = createSlice({
     [getPosts.fulfilled]: (state, action) => {
       return action.payload.posts
     },
+    [createPost.fulfilled]: (state, action) => {
+      state.push(action.payload.post);
+    },
   },
 });
 

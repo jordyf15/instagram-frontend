@@ -42,6 +42,14 @@ const PasswordVisibilityBtn = styled.button`
   font-family: 'Roboto';
 `;
 
+const InputError = styled(FontAwesomeIcon)`
+  color: #ee2d3e;
+  position: absolute;
+  font-size: 1.4em;
+  right: 10px;
+  top: 7px;
+`;
+
 const PasswordInput = ({value, handleChange, error, label}) => {
   const [show, setShow] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -64,7 +72,7 @@ const PasswordInput = ({value, handleChange, error, label}) => {
       {
         focused?null
         :error
-        ?<FontAwesomeIcon className='input-error' icon={faCircleXmark}/>
+        ?<InputError icon={faCircleXmark}/>
         :null
       }
     </InputContainer>
