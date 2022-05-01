@@ -18,13 +18,10 @@ export const getPosts = createAsyncThunk(
 export const createPost = createAsyncThunk(
   'post/createPost',
   async ({visualMedias, caption}, thunkAPI) => {
-    console.log(visualMedias);
     try{
       const response = await PostService.createPost({visualMedias, caption});
-      console.log(response);
       return response.data;
     } catch(error) {
-      console.log(error);
       return thunkAPI.rejectWithValue();
     }
   }
