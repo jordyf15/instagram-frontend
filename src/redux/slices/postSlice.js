@@ -6,8 +6,6 @@ export const getPosts = createAsyncThunk(
   async (_, thunkAPI) => {
     try{
       const response = await PostService.getPosts();
-      console.log('response get post');
-      console.log(response);
       return response.data;
     }catch(error) {
       return thunkAPI.rejectWithValue();

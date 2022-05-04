@@ -20,6 +20,7 @@ export const postComment = createAsyncThunk(
     try {
       const response = await CommentService.postComment({postId, comment})
       console.log(response);
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue();
     }
@@ -53,6 +54,11 @@ export const deleteComment = createAsyncThunk(
 const commentSlice = createSlice({
   name: 'comment',
   initialState: [],
+  extraReducers: {
+    [postComment.fulfilled]: (state, action) => {
+      state.push(action.payload.comment);
+    }
+  }
 });
 
 export default commentSlice.reducer;
