@@ -7,7 +7,7 @@ import { faEllipsis, faHeart as fullHeart } from '@fortawesome/free-solid-svg-ic
 import { faComment, faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
 import VisualMediaSlider from './VisualMediaSlider';
 import PostCommentForm from './PostCommentForm';
-import { deletePostLike, likePost } from '../../redux/slices/likeSlice';
+import { deletePostLike, likePost } from '../../redux/slices/postSlice';
 
 const getTimeStamp = (timeStampStr) => {
   const timeStamp = new Date(timeStampStr).getTime();

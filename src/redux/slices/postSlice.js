@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import likeService from '../../services/like.service';
 import PostService from '../../services/post.service';
 
 export const getPosts = createAsyncThunk(
@@ -64,6 +65,30 @@ export const deletePost = createAsyncThunk(
   }
 );
 
+export const likePost = createAsyncThunk(
+  'like/likePost',
+  async (postId, thunkAPI) => {
+    try{
+      const response = await likeService.likePost(postId);
+      return response.data;
+    } catch(error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
+export const deletePostLike = createAsyncThunk(
+  'like/deletePostLike',
+  async({postId, likeId}, thunkAPI) => {
+    try{
+      await likeService.deletePostLike({postId, likeId});
+      return postId;
+    }catch(error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 
 const postSlice = createSlice({
   name: 'post',
@@ -74,6 +99,16 @@ const postSlice = createSlice({
     },
     [createPost.fulfilled]: (state, action) => {
       state.push(action.payload.post);
+    },
+    [likePost.fulfilled]: (state, action) => {
+      const index = state.findIndex((post)=>post.id === action.payload.like.resource_id);
+      state[index].like=action.payload.like;
+      state[index].like_count++;
+    },
+    [deletePostLike.fulfilled]: (state, action) => {
+      const index = state.findIndex((post)=>post.id===action.payload);
+      state[index].like = null;
+      state[index].like_count--;
     },
   },
 });
