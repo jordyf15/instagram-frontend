@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import CommentService from '../../services/comment.service';
 import likeService from '../../services/like.service';
 import PostService from '../../services/post.service';
 
@@ -27,11 +28,10 @@ export const createPost = createAsyncThunk(
 );
 
 export const getUserPosts = createAsyncThunk(
-  'post/createPost',
+  'post/getUserPost',
   async (_, thunkAPI) => {
     try{
       const response = await PostService.getUserPosts();
-      console.log(response);
       return response.data;
     } catch(error) {
       return thunkAPI.rejectWithValue();
@@ -89,13 +89,64 @@ export const deletePostLike = createAsyncThunk(
   }
 );
 
+export const getPostComments = createAsyncThunk(
+  'comment/getPostComments',
+  async (postId, thunkAPI) => {
+    try{
+      const response = await CommentService.getComments(postId)
+      return response.data;
+    }catch(error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
+export const likeComment = createAsyncThunk(
+  'like/likeComment',
+  async({postId, commentId}, thunkAPI) => {
+    try {
+      const response = await likeService.likeComment({postId, commentId});
+      return {...response.data, postId}
+    } catch(error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
+export const deleteCommentLike = createAsyncThunk(
+  'like/deleteCommentLike',
+  async({postId, commentId, likeId}, thunkAPI) => {
+      try {
+        await likeService.deleteCommentLike({postId, commentId, likeId});
+        return {postId, commentId}
+      }catch(error) {
+        return thunkAPI.rejectWithValue();
+      }
+  }
+);
+
+export const postComment = createAsyncThunk(
+  'comment/postComment', 
+  async({postId, comment}, thunkAPI) => {
+    try {
+      const response = await CommentService.postComment({postId, comment})
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
 
 const postSlice = createSlice({
   name: 'post',
   initialState: [],
   extraReducers: {
     [getPosts.fulfilled]: (state, action) => {
-      return action.payload.posts
+      return action.payload.posts;
+    },
+    [getUserPosts.fulfilled]: (state, action) => {
+      return action.payload.posts;
     },
     [createPost.fulfilled]: (state, action) => {
       state.push(action.payload.post);
@@ -109,6 +160,28 @@ const postSlice = createSlice({
       const index = state.findIndex((post)=>post.id===action.payload);
       state[index].like = null;
       state[index].like_count--;
+    },
+    [getPostComments.fulfilled]: (state, action) => {
+      if(action.payload.comments){
+        const index = state.findIndex((post) => post.id === action.payload.comments[0].post_id);
+        state[index].comments = action.payload.comments;
+      }
+    },
+    [likeComment.fulfilled]: (state, action) => {
+      const postIndex = state.findIndex((post)=>post.id===action.payload.postId);
+      const post = state[postIndex];
+      const commentIndex = post.comments.findIndex((comment)=>comment.id===action.payload.like.resource_id);
+      post.comments[commentIndex].like = action.payload.like; 
+    },
+    [deleteCommentLike.fulfilled]: (state, action) => {
+      const postIndex = state.findIndex((post) => post.id === action.payload.postId);
+      const post = state[postIndex];
+      const commentIndex = post.comments.findIndex((comment) => comment.id === action.payload.commentId);
+      post.comments[commentIndex].like = null;
+    },
+    [postComment.fulfilled]: (state, action) => {
+      const index = state.findIndex((post) => post.id === action.payload.comment.post_id);
+      state[index].comments.push(action.payload.comment);
     },
   },
 });

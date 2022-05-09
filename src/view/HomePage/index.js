@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { getPosts } from '../../redux/slices/postSlice';
 import Layout from '../Layout';
+import PostComments from '../PostComments';
 import PostItem from './PostItem';
 
 const PostList = styled.ul`
@@ -12,18 +13,31 @@ const PostList = styled.ul`
 `;
 
 const HomePage = () => {
+  const [currentPostId, setCurrentPostId] = useState('');
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.post);
   useEffect(() => {
     dispatch(getPosts())
     .unwrap()
     .then();
-  }, [dispatch])
+  }, [dispatch]);
+
+  const showPostComments = (postId) => {
+    setCurrentPostId(postId);
+  }
+
+  const closePostComments = () => {
+    setCurrentPostId('');
+  }
 
   return(
-    <Layout>
+    <Layout> 
+      {currentPostId
+      ?<PostComments close={closePostComments} postId={currentPostId}/>
+      :null}
+   
       <PostList>
-        {posts.map((post)=><PostItem post={post} key={post.id}/>)}
+        {posts.map((post)=><PostItem showPostComments={showPostComments} post={post} key={post.id}/>)}
       </PostList>
     </Layout>
   )

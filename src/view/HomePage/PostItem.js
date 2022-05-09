@@ -106,7 +106,7 @@ const PostItemTimestamp = styled.p`
   margin-top: 15px;
 `;
 
-const PostItem = ({post}) => {
+const PostItem = ({post, showPostComments}) => {
   const dispatch = useDispatch();
   const handleDislikePost = () => {
     dispatch(deletePostLike({postId: post.id, likeId: post.like.id}))
@@ -136,7 +136,7 @@ const PostItem = ({post}) => {
           ?<PostItemToggleLikeBtn onClick={handleDislikePost}><FontAwesomeIcon icon={fullHeart}></FontAwesomeIcon></PostItemToggleLikeBtn>
           :<PostItemToggleLikeBtn onClick={handleLikePost}><FontAwesomeIcon icon={emptyHeart}></FontAwesomeIcon></PostItemToggleLikeBtn>
           }
-          <PostItemCommentBtn><FontAwesomeIcon icon={faComment}></FontAwesomeIcon></PostItemCommentBtn>
+          <PostItemCommentBtn onClick={()=>showPostComments(post.id)}><FontAwesomeIcon icon={faComment}></FontAwesomeIcon></PostItemCommentBtn>
         </div>
         <PostItemLikeCount>{post.like_count} likes</PostItemLikeCount>
         <PostItemDetail><strong>{post.user.username}</strong> {post.caption}</PostItemDetail>

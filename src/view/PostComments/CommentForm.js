@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { postComment } from '../../redux/slices/postSlice';
 
 const Form = styled.form`
-  display: none;
+  display: flex;
   align-items: center;
-  padding: 10px 10px 0 10px;
+  padding: 0 10px 0 10px;
   border-top: 1px solid #f7f7f7;
-  @media (min-width: 750px) {
-    display: flex;
-  }
 `;
 
 const Textarea = styled.textarea`
@@ -20,7 +17,7 @@ const Textarea = styled.textarea`
   font-size: 0.9em;
   padding-top: 10px;
   resize: none;
-  &:focus{
+  &:focus {
     box-shadow: none;
     border: none;
     overflow: auto;
@@ -28,45 +25,45 @@ const Textarea = styled.textarea`
   }
 `;
 
-const ActiveBtn = styled.button`
+const SubmitBtn = styled.button`
   border:none;
   background: none;
   font-family: 'Roboto';
   font-weight: bold;
+`;
+
+const SubmitBtnActive = styled(SubmitBtn)`
   color: #0095f6;
 `;
 
-const DisabledBtn = styled.button`
-  border:none;
-  background: none;
-  font-family: 'Roboto';
-  font-weight: bold;
+const SubmitBtnDisabled = styled(SubmitBtn)`
   color: #b3dffc;
 `;
 
-const PostCommentForm = ({postId}) => {
+const CommentForm = ({inputRef, postId}) => {
   const [comment, setComment] = useState('');
   const dispatch = useDispatch();
-
   const handleChange = (newComment) => {
-    setComment(newComment)
+    setComment(newComment);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postComment({postId, comment}))
     .unwrap()
-    .then(()=>{
+    .then(() => {
       setComment('');
-    });
+    })
   }
+
   return(
     <Form onSubmit={handleSubmit}>
-      <Textarea placeholder='Add a comment...' value={comment} onChange={({target})=>handleChange(target.value)}/>
-      {comment?<ActiveBtn type='submit'>Post</ActiveBtn>
-      :<DisabledBtn type='submit' disabled>Post</DisabledBtn>}
+      <Textarea value={comment} onChange={({target})=>handleChange(target.value)} ref={inputRef} placeholder='Add a comment...'/>
+      {comment
+      ?<SubmitBtnActive type='submit'>Post</SubmitBtnActive>
+      :<SubmitBtnDisabled type='submit' disabled>Post</SubmitBtnDisabled>}
     </Form>
   )
 };
 
-export default PostCommentForm;
+export default CommentForm;

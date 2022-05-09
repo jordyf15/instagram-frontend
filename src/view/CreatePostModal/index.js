@@ -114,7 +114,6 @@ const CreatePostModal = ({closeCreatePostModal}) => {
     dispatch(createPost({visualMedias: files, caption}))
     .unwrap()
     .then((response) => {
-      // masukin ke redux store nanti
       closeCreatePostModal();
     });
   }
