@@ -110,14 +110,10 @@ const PostItem = ({post, showPostComments}) => {
   const dispatch = useDispatch();
   const handleDislikePost = () => {
     dispatch(deletePostLike({postId: post.id, likeId: post.like.id}))
-    .unwrap()
-    .then();
   };
 
   const handleLikePost = () => {
     dispatch(likePost(post.id))
-    .unwrap()
-    .then();
   };
 
   return(

@@ -87,36 +87,34 @@ const CreatePostModal = ({closeCreatePostModal}) => {
 
   const handleChangeVisualMedias = (newVisualMedias) => {
     setVisualMedias(newVisualMedias);
-  }
+  };
 
   const emptyVisualMedias = () => {
     setShowDiscardPostModal(false);
     setVisualMedias([]);
-  }
+  };
 
   const hideDiscardPostModal = () => {
     setShowDiscardPostModal(false);
-  }
+  };
 
   const displayDiscardPostModal = () => {
     setShowDiscardPostModal(true);
-  }
+  };
 
   const handleClick = (e) => {
     e.stopPropagation();
-  }
+  };
 
-  const sharePost = () => {
+  const sharePost = async() => {
     const files = []
     for(let i = 0; i< visualMedias.length; i++){
       files.push(visualMedias[i]);
     }
-    dispatch(createPost({visualMedias: files, caption}))
-    .unwrap()
-    .then(() => {
-      closeCreatePostModal();
-    });
-  }
+    await dispatch(createPost({visualMedias: files, caption}))
+    closeCreatePostModal();
+  };
+
   return(
     <Background onClick={closeCreatePostModal}>
       <CloseBtn><FontAwesomeIcon icon={faXmark}/></CloseBtn>

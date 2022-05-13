@@ -163,22 +163,16 @@ const EditProfilePage = () => {
     setShowChangeProfilePicModal(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    dispatch(updateProfile({username, fullname, email, password, userId: user.id}))
-    .unwrap()
-    .then(() => {
-      setValidSubmit(false);
-    });
+    await dispatch(updateProfile({username, fullname, email, password, userId: user.id}))
+    setValidSubmit(false);
   };
 
-  const handleChangeProfilePicture = (profilePic) => {
-    dispatch(updateProfile({username: user.username, fullname: user.fullname, email: user.email, password: null,profilePic, userId: user.id}))
-    .unwrap()
-    .then(() => {
-      setProfilePictures(null);
-      setShowChangeProfilePicModal(false);
-    });
+  const handleChangeProfilePicture = async(profilePic) => {
+    await dispatch(updateProfile({username: user.username, fullname: user.fullname, email: user.email, password: null,profilePic, userId: user.id}))
+    setProfilePictures(null);
+    setShowChangeProfilePicModal(false);
   };
 
   const handleChangeUsername = (newUsername) => {

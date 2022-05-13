@@ -59,12 +59,9 @@ const ChangeProfilePicModal = ({handleChange, closeModal}) => {
   const handleClick = (e) => {
     e.stopPropagation();
   };
-  const handleDeleteProfilePicture = () => {
-    dispatch(deleteProfilePicture(user.id))
-    .unwrap()
-    .then(() => {
-      closeModal();
-    });
+  const handleDeleteProfilePicture = async() => {
+    await dispatch(deleteProfilePicture(user.id))
+    closeModal();
   }
 
   return (

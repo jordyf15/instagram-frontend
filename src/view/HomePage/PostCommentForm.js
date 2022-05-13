@@ -52,14 +52,12 @@ const PostCommentForm = ({postId}) => {
     setComment(newComment)
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    dispatch(postComment({postId, comment}))
-    .unwrap()
-    .then(()=>{
-      setComment('');
-    });
-  }
+    await dispatch(postComment({postId, comment}))
+    setComment('');
+  };
+
   return(
     <Form onSubmit={handleSubmit}>
       <Textarea placeholder='Add a comment...' value={comment} onChange={({target})=>handleChange(target.value)}/>

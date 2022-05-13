@@ -74,7 +74,7 @@ const CommentList = ({comments, username, caption, timestamp, setChosenComment})
         </PostDetailContainer>
       </PostContainer>
       <CommentListUl>
-        {comments.map((comment)=><CommentItem setChosenComment={setChosenComment} key={comment.id} comment={comment}/>)}
+        {comments && comments.map((comment)=><CommentItem setChosenComment={setChosenComment} key={comment.id} comment={comment}/>)}
       </CommentListUl>
     </CommentListContainer>
   )

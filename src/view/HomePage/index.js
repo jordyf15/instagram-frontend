@@ -21,8 +21,6 @@ const HomePage = () => {
   const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
   useEffect(() => {
     dispatch(getPosts())
-    .unwrap()
-    .then();
   }, [dispatch]);
 
   useEffect(() => {
