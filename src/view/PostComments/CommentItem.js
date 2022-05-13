@@ -4,7 +4,7 @@ import { faHeart as fullHeart, faEllipsis } from '@fortawesome/free-solid-svg-ic
 import { faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
 import styled from 'styled-components';
 import userImage from '../../assets/profile-test.jpg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteCommentLike, likeComment } from '../../redux/slices/postSlice';
 
 const Container = styled.div`
@@ -73,8 +73,9 @@ const getTimeStamp = (timeStampStr) => {
   }
 }
 
-const CommentItem = ({comment}) => {
+const CommentItem = ({comment, setChosenComment}) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const handleLike = () => {
     dispatch(likeComment({postId:comment.post_id, commentId:comment.id}))
   };
@@ -87,13 +88,19 @@ const CommentItem = ({comment}) => {
     }));
   };
 
+  const handleClickOptions = () => {
+    setChosenComment(comment);
+  };
+
   return(
     <Container>
       <UserProfilePic src={userImage} alt=''/>
       <DetailContainer>
         <Detail><strong>{comment.user.username}</strong> {comment.comment}</Detail>
         <Timestamp>{getTimeStamp(comment.updated_date)}</Timestamp>
-        <OptionBtn><FontAwesomeIcon icon={faEllipsis}/></OptionBtn>
+        {comment.user.id === user.id
+        ?<OptionBtn onClick={handleClickOptions}><FontAwesomeIcon icon={faEllipsis}/></OptionBtn>
+        :null}
       </DetailContainer>
       {comment.like
       ?<ToggleLikeBtn onClick={handleDislike}><FontAwesomeIcon icon={fullHeart}/></ToggleLikeBtn>

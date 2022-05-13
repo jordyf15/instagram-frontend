@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import CommentService from '../../services/comment.service';
 
-
-
 export const updateComment = createAsyncThunk(
   'comment/updateComment',
   async({postId, commentId, comment}, thunkAPI) => {
@@ -14,18 +12,6 @@ export const updateComment = createAsyncThunk(
     }
   }
 );
-
-export const deleteComment = createAsyncThunk(
-  'comment/deleteComment',
-  async({postId, commentId}, thunkAPI) => {
-    try {
-      const response = await CommentService.deleteComment({postId, commentId})
-      console.log(response);
-    } catch(error) {
-      return thunkAPI.rejectWithValue();
-    }
-  }
-)
 
 const commentSlice = createSlice({
   name: 'comment',

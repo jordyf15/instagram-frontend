@@ -63,7 +63,7 @@ const getTimeStamp = (timeStampStr) => {
   }
 }
 
-const CommentList = ({comments, profileImgUrl, username, caption, timestamp}) => {
+const CommentList = ({comments, username, caption, timestamp, setChosenComment}) => {
   return(
     <CommentListContainer>
       <PostContainer>
@@ -74,7 +74,7 @@ const CommentList = ({comments, profileImgUrl, username, caption, timestamp}) =>
         </PostDetailContainer>
       </PostContainer>
       <CommentListUl>
-        {comments.map((comment)=><CommentItem key={comment.id} comment={comment}/>)}
+        {comments.map((comment)=><CommentItem setChosenComment={setChosenComment} key={comment.id} comment={comment}/>)}
       </CommentListUl>
     </CommentListContainer>
   )

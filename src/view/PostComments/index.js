@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faEllipsis, faHeart as fullHeart } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,8 @@ import CommentList from './CommentList';
 import useFocus from '../../customHooks/useFocus';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePostLike, getPostComments, likePost } from '../../redux/slices/postSlice';
+import CommentOptionModal from './CommentOptionModal';
+import PostOptionModal from './PostOptionModal';
 
 const Background = styled.div`
   width: 100vw;
@@ -140,6 +142,7 @@ const getTimeStamp = (timeStampStr) => {
 }
 
 const PostComments = ({postId, close}) => {
+  const [chosenComment, setChosenComment] = useState(null);
   const dispatch = useDispatch();
   const post = useSelector((state)=>state.post.filter((p)=>p.id===postId)[0]);
   const [inputRef, setInputFocus] = useFocus();
@@ -159,8 +162,17 @@ const PostComments = ({postId, close}) => {
     dispatch(deletePostLike({postId: post.id, likeId: post.like.id}))
   };
 
+  const closeCommentOptionModal = () => {
+    setChosenComment(null);
+  };
+
   return (
     <Background onClick={close}>
+      {
+        chosenComment
+        ?<CommentOptionModal comment={chosenComment} closeModal={closeCommentOptionModal}/>
+        :null
+      }
       <CloseModalBtn onClick={close}><FontAwesomeIcon icon={faXmark}/></CloseModalBtn>
       <Container onClick={handleClickContainer}>
         <Header>
@@ -170,7 +182,7 @@ const PostComments = ({postId, close}) => {
           </UserInfoContainer>
           <OptionsBtn><FontAwesomeIcon icon={faEllipsis}/></OptionsBtn>
         </Header>
-        <CommentList comments={post.comments} profileImgUrl={post.user.profile_pictures} username={post.user.username}
+        <CommentList setChosenComment={setChosenComment} comments={post.comments} profileImgUrl={post.user.profile_pictures} username={post.user.username}
           caption={post.caption} timestamp={post.updated_date}/>
         <WidgetContainer>
           {post.like

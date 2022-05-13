@@ -130,9 +130,20 @@ export const postComment = createAsyncThunk(
   async({postId, comment}, thunkAPI) => {
     try {
       const response = await CommentService.postComment({postId, comment})
-      console.log(response);
       return response.data;
     } catch (error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
+export const deleteComment = createAsyncThunk(
+  'comment/deleteComment',
+  async({postId, commentId}, thunkAPI) => {
+    try {
+      await CommentService.deleteComment({postId, commentId})
+      return {postId, commentId};
+    } catch(error) {
       return thunkAPI.rejectWithValue();
     }
   }
@@ -183,6 +194,11 @@ const postSlice = createSlice({
       const index = state.findIndex((post) => post.id === action.payload.comment.post_id);
       state[index].comments.push(action.payload.comment);
     },
+    [deleteComment.fulfilled]: (state, action) => {
+      const postIndex = state.findIndex((post) => post.id === action.payload.postId);
+      state[postIndex].comments = state[postIndex].comments
+        .filter((comment) => comment.id !== action.payload.commentId);
+    }
   },
 });
 
