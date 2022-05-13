@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Layout from '../Layout';
 import userImage from '../../assets/profile-test.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PostList from './PostList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserPosts } from '../../redux/slices/postSlice';
@@ -138,7 +138,13 @@ const PostsTab = styled.button`
 const ProfilePage = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
   const myPosts = useSelector((state) => state.post);
+
+  useEffect(() => {
+    if(!isLoggedIn) navigate('/login');
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     dispatch(getUserPosts())

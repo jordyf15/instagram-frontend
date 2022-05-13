@@ -107,8 +107,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if(isLoggedIn) navigate('/');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     setValidSubmit(!usernameError && !fullnameError && !emailError && !passwordError && 

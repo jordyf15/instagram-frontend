@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getPosts } from '../../redux/slices/postSlice';
 import Layout from '../Layout';
@@ -15,12 +16,18 @@ const PostList = styled.ul`
 const HomePage = () => {
   const [currentPostId, setCurrentPostId] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const posts = useSelector((state) => state.post);
+  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
   useEffect(() => {
     dispatch(getPosts())
     .unwrap()
     .then();
   }, [dispatch]);
+
+  useEffect(() => {
+    if(!isLoggedIn) navigate('/login')
+  }, [isLoggedIn, navigate]);
 
   const showPostComments = (postId) => {
     setCurrentPostId(postId);

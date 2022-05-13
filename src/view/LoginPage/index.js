@@ -92,8 +92,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if(isLoggedIn) navigate('/');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
