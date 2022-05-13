@@ -6,6 +6,7 @@ import RegisterPage from './view/RegisterPage';
 import LoginPage from './view/LoginPage';
 import ProfilePage from './view/ProfilePage';
 import './App.css';
+import EditProfilePage from './view/EditProfilePage';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/register" element={<RegisterPage/>} />
         <Route exact path="/login" element={<LoginPage/>}/>
         <Route exact path="/profile" element={<ProfilePage/>}/>
+        <Route exact path="/profile/edit" element={<EditProfilePage/>}/>
       </Routes>
     </Router>
   )

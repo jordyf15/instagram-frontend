@@ -5,9 +5,7 @@ export const register = createAsyncThunk(
   "user/register",
   async ({ username, email, fullname, password}, thunkAPI) => {
     try {
-      const response = await UserService.register({ email, username, fullname, password });
-      console.log('response register');
-      console.log(response);
+      await UserService.register({ email, username, fullname, password });
     } catch (error) {
       if (error.response.status === 409) {
         return thunkAPI.rejectWithValue(error.response.data.message);
@@ -16,6 +14,7 @@ export const register = createAsyncThunk(
     }
   }
 );
+
 export const getProfile = createAsyncThunk(
   "user/getProfile",
   async ({userId}, thunkAPI) => {
@@ -27,25 +26,46 @@ export const getProfile = createAsyncThunk(
       return thunkAPI.rejectWithValue();
     }
   }
-)
+);
+
 export const updateProfile = createAsyncThunk(
   "user/updateProfile",
   async ({username, fullname, password, email, profilePic, userId}, thunkAPI) => {
     try {
       const response = await UserService.updateProfile({username, fullname, password, email, profilePic, userId});
-      console.log('response update profile');
-      console.log(response);
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue();
     }
   }
-)
+);
+
+export const deleteProfilePicture = createAsyncThunk(
+  "user/deleteProfilePicture",
+  async (userId, thunkAPI) => {
+    try{
+      const response = await UserService.deleteProfilePicture(userId);
+      return response.data;
+    }catch(error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {},
   reducers: {
     setUser: (state, action) => {
       return action.payload;
+    },
+  },
+  extraReducers: {
+    [updateProfile.fulfilled]: (state, action) => {
+      return action.payload.user;
+    },
+    [deleteProfilePicture.fulfilled]: (state, action) => {
+      return action.payload.user;
     },
   }
 });

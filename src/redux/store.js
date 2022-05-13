@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/user';
+import userReducer from './slices/userSlice';
 import messageReducer from './slices/message';
 import authenticationReducer from './slices/authenticationSlice';
 import commentReducer from './slices/commentSlice';

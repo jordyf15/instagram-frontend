@@ -19,20 +19,39 @@ const getProfile = (userId) => {
 
 const updateProfile = ({username, fullname, password, email, profilePic, userId}) => {
   const bodyFormData = new FormData();
-  bodyFormData.append('username', username);
-  bodyFormData.append('full_name', fullname);
-  bodyFormData.append('password', password);
-  bodyFormData.append('profile_picture', profilePic);
-  bodyFormData.append('email', email);
+  if(username) {
+    bodyFormData.append('username', username);
+  }
+  if(fullname) {
+    bodyFormData.append('full_name', fullname);
+  }
+  if(password) {
+    bodyFormData.append('password', password);
+  }
+  if(profilePic) {
+    bodyFormData.append('profile_picture', profilePic);
+  }
+  if(email) {
+    bodyFormData.append('email', email);
+  }
   return axios.put(`${BASE_URL}/${userId}`,bodyFormData, {headers: {
       ...authHeader(),
       'Content-Type': 'multipart/form-data'
   }}).then((response) => response.data);
 }
 
+const deleteProfilePicture = (userId) => {
+  return axios.delete(`${BASE_URL}/${userId}`, {
+    headers:{
+      ...authHeader(),
+    }
+  }).then((response) => response.data);
+}
+
 const userService = {
   register,
   updateProfile,
   getProfile,
+  deleteProfilePicture,
 };
 export default userService;

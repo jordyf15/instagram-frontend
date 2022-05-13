@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../../redux/slices/user';
+import { register } from '../../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import TextInput from './TextInput';
