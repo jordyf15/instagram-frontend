@@ -163,7 +163,7 @@ const getTimeStamp = (timeStampStr) => {
   }
 }
 
-const PostComments = ({postId, close}) => {
+const PostDetail = ({postId, close}) => {
   const [chosenComment, setChosenComment] = useState(null);
   const [showPostOptionModal, setShowPostOptionModal] = useState(false);
   const [showEditPostModal, setShowEditPostModal] = useState(false);
@@ -264,4 +264,4 @@ const PostComments = ({postId, close}) => {
   )
 };
 
-export default PostComments;
+export default PostDetail;

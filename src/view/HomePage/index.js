@@ -6,7 +6,7 @@ import PostOptionModal from '../../components/PostOptionModal';
 import { deletePost, getPosts } from '../../redux/slices/postSlice';
 import EditPostModal from '../EditPostModal';
 import Layout from '../Layout';
-import PostComments from '../PostComments';
+import PostDetail from '../PostDetail';
 import PostItem from './PostItem';
 
 const PostList = styled.ul`
@@ -64,7 +64,7 @@ const HomePage = () => {
     <Layout> 
       {
       currentPostDetailId
-      ?<PostComments close={closePostComments} postId={currentPostDetailId}/>
+      ?<PostDetail close={closePostComments} postId={currentPostDetailId}/>
       :null
       }
       {
