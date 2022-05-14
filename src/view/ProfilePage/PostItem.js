@@ -54,11 +54,11 @@ const CommentCount = styled.span`
   }
 `;
 
-const PostItem = ({postId}) => {
+const PostItem = ({postId, openPostDetail}) => {
   const post = useSelector((state) => state.post.filter((post)=>post.id === postId)[0]);
 
   return (
-    <Container>
+    <Container onClick={()=>openPostDetail(postId)}>
       <PostImg src={userImage} alt=''/>
       <ViewPostBtn>
         <LikeCount><FontAwesomeIcon icon={faHeart}/> {post.like_count}</LikeCount>

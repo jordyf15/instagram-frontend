@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Layout from '../Layout';
 import userImage from '../../assets/profile-test.jpg';
@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import PostList from './PostList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserPosts } from '../../redux/slices/postSlice';
+import PostDetail from '../PostDetail';
 
 const Main = styled.main`
   flex-grow: 1;
@@ -137,6 +138,7 @@ const PostsTab = styled.button`
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.user);
+  const [selectedPostId, setSelectedPostId] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
@@ -149,19 +151,31 @@ const ProfilePage = () => {
   useEffect(() => {
     dispatch(getUserPosts())
   }, [dispatch]);
+
+  const openPostDetail = (postId) => {
+    setSelectedPostId(postId);
+  };
+
+  const closePostDetail = () => {
+    setSelectedPostId('');
+  };
+
   return (
     <Layout>
       <Main>
+        {
+          selectedPostId
+          ?<PostDetail postId={selectedPostId} close={closePostDetail}/>
+          :null
+        }
         <UpperContainer>
           <UserProfileImgContainer>
             <UserProfileImg src={userImage} alt=''/>
           </UserProfileImgContainer>
-         
           <MainInfoContainer>
             <Username>{user.username}</Username>
             <EditProfileLink to='edit'>Edit Profile</EditProfileLink>
           </MainInfoContainer>
-          
           <OtherInfoContainer>
             <Fullname>{user.fullname}</Fullname>
             <Email>{user.email}</Email>
@@ -171,7 +185,7 @@ const ProfilePage = () => {
           <LowerContainerHeader>
             <PostsTab>POSTS</PostsTab>
           </LowerContainerHeader>
-          <PostList posts={myPosts}/>
+          <PostList posts={myPosts} openPostDetail={openPostDetail}/>
         </LowerContainer>
       </Main>
     </Layout>

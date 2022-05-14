@@ -17,11 +17,11 @@ const MyPostList = styled.ul`
   }
 `;
 
-const PostList = () => {
+const PostList = ({openPostDetail}) => {
   const myPosts = useSelector((state)=>state.post);
   return(
       <MyPostList>
-        {myPosts.map((myPost) => <PostItem key={myPost.id} postId={myPost.id}/>)}
+        {myPosts.map((myPost) => <PostItem openPostDetail={openPostDetail} key={myPost.id} postId={myPost.id}/>)}
       </MyPostList>
   );
 }
