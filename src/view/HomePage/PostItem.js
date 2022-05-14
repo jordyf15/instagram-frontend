@@ -5,7 +5,7 @@ import userImage from '../../assets/profile-test.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as fullHeart } from '@fortawesome/free-solid-svg-icons';
 import { faComment, faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
-import VisualMediaSlider from './VisualMediaSlider';
+import VisualMediaSlider from '../../components/visualMediaSlider';
 import PostCommentForm from './PostCommentForm';
 import { deletePostLike, likePost } from '../../redux/slices/postSlice';
 

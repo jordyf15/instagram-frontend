@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import userImage from '../../assets/profile-test.jpg';
-import BtnSlider from './BtnSlider';
-import VisualMediaDot from './VisualMediaDot';
+import SliderBtn from './SliderBtn';
+import SliderDot from './SliderDot';
 
-const SliderContainer = styled.div`
+const Container = styled.div`
   position:relative;
-`;
-
-const PostItemImg = styled.img`
   width: 100%;
 `;
 
-const SliderBtnContainer = styled.div`
+const Img = styled.img`
+  width: 100%;
+`;
+
+const BtnContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -20,9 +21,9 @@ const SliderBtnContainer = styled.div`
   left: 0;
 `;
 
-const SliderDotContainer = styled.div`
+const DotContainer = styled.div`
   position: absolute;
-  bottom: -20px;
+  bottom: 15px;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -43,23 +44,23 @@ const VisualMediaSlider = ({visualMediaUrls}) => {
     }
   };
   return(
-    <SliderContainer>
-      <PostItemImg src={userImage} alt=''/>
-      <SliderBtnContainer>
+    <Container>
+      <Img src={userImage} alt=''/>
+      <BtnContainer>
         {slideIndex!==0
-        ?<BtnSlider moveSlide={prevSlide} direction='prev'/>
+        ?<SliderBtn moveSlide={prevSlide} direction='prev'/>
         :null}
         {slideIndex !== visualMediaUrls.length-1
-        ?<BtnSlider moveSlide={nextSlide} direction='next'/>
+        ?<SliderBtn moveSlide={nextSlide} direction='next'/>
         :null}
-      </SliderBtnContainer>
+      </BtnContainer>
       {visualMediaUrls.length>1
-      ?<SliderDotContainer>
-        {visualMediaUrls.map((visualMediaUrl, idx) => <VisualMediaDot
-        isActive={slideIndex===idx} key={visualMediaUrl}></VisualMediaDot>)}
-      </SliderDotContainer>
+      ?<DotContainer>
+        {visualMediaUrls.map((visualMediaUrl, idx) => <SliderDot
+        isActive={slideIndex===idx} key={visualMediaUrl}></SliderDot>)}
+      </DotContainer>
       :null}
-    </SliderContainer>
+    </Container>
   )
 };
 

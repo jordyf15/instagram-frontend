@@ -12,6 +12,7 @@ import { deletePost, deletePostLike, getPostComments, likePost } from '../../red
 import CommentOptionModal from './CommentOptionModal';
 import PostOptionModal from '../../components/PostOptionModal';
 import EditPostModal from '../EditPostModal';
+import VisualMediaSlider from '../../components/visualMediaSlider';
 
 const Background = styled.div`
   width: 100vw;
@@ -27,21 +28,41 @@ const Background = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: white;
-  text-align: center;
+  display: flex;
   width: 100vw;
-  max-width: 350px;
   height: 90vh;
   max-height: 400px;
+  @media (min-width: 350px) {
+    width: 90vw;
+  }
+  @media (min-width: 730px) {
+    max-height: 550px;
+    max-width: 1000px;
+  }
+`;
+
+const CommentsContainer = styled.div`
+  background-color: white;
+  text-align: center;
   display:flex;
   flex-direction: column;
-
+  flex-grow: 1;
   @media (min-width: 350px) {
     border-radius: 5px;
   }
   @media (min-width: 730px) {
-    max-width: 600px;
-    max-height: 550px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+`;
+
+const VisualMediaContainer = styled.div`
+  flex-grow: 1;
+  background-color: black;
+  display: none;
+  @media (min-width: 730px) {
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -211,28 +232,33 @@ const PostComments = ({postId, close}) => {
       }
       <CloseModalBtn onClick={close}><FontAwesomeIcon icon={faXmark}/></CloseModalBtn>
       <Container onClick={handleClickContainer}>
-        <Header>
-          <UserInfoContainer>
-            <PostUserProfileImg src={userImage} alt=''/>
-            <PostUsername>{post.user.username}</PostUsername>
-          </UserInfoContainer>
-          {
-            post.user.id === user.id
-            ?<OptionsBtn onClick={openPostOptionModal}><FontAwesomeIcon icon={faEllipsis}/></OptionsBtn>
-            :null
-          }
-        </Header>
-        <CommentList setChosenComment={setChosenComment} comments={post.comments} profileImgUrl={post.user.profile_pictures} username={post.user.username}
-          caption={post.caption} timestamp={post.updated_date}/>
-        <WidgetContainer>
-          {post.like
-          ?<ToggleLikeBtn onClick={handleDislikePost}><FontAwesomeIcon icon={fullHeart}/></ToggleLikeBtn>
-          :<ToggleLikeBtn onClick={handleLikePost}><FontAwesomeIcon icon={emptyHeart}/></ToggleLikeBtn>}
-          <CommentBtn onClick={setInputFocus}><FontAwesomeIcon icon={faComment}/></CommentBtn>
-        </WidgetContainer>
-        <LikeCount>{post.like_count} likes</LikeCount>
-        <Timestamp>{getTimeStamp(post.updated_date)}</Timestamp>
-        <CommentForm postId={post.id} inputRef={inputRef}/>
+        <VisualMediaContainer>
+          <VisualMediaSlider visualMediaUrls={post.visual_media_urls}/>
+        </VisualMediaContainer>
+        <CommentsContainer>
+          <Header>
+            <UserInfoContainer>
+              <PostUserProfileImg src={userImage} alt=''/>
+              <PostUsername>{post.user.username}</PostUsername>
+            </UserInfoContainer>
+            {
+              post.user.id === user.id
+              ?<OptionsBtn onClick={openPostOptionModal}><FontAwesomeIcon icon={faEllipsis}/></OptionsBtn>
+              :null
+            }
+          </Header>
+              <CommentList setChosenComment={setChosenComment} comments={post.comments} profileImgUrl={post.user.profile_pictures} username={post.user.username}
+                caption={post.caption} timestamp={post.updated_date}/>
+              <WidgetContainer>
+                {post.like
+                ?<ToggleLikeBtn onClick={handleDislikePost}><FontAwesomeIcon icon={fullHeart}/></ToggleLikeBtn>
+                :<ToggleLikeBtn onClick={handleLikePost}><FontAwesomeIcon icon={emptyHeart}/></ToggleLikeBtn>}
+                <CommentBtn onClick={setInputFocus}><FontAwesomeIcon icon={faComment}/></CommentBtn>
+              </WidgetContainer>
+              <LikeCount>{post.like_count} likes</LikeCount>
+              <Timestamp>{getTimeStamp(post.updated_date)}</Timestamp>
+              <CommentForm postId={post.id} inputRef={inputRef}/>
+        </CommentsContainer>
       </Container>
     </Background>
   )

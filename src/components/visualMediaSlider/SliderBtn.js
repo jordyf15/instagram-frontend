@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-const SliderBtn = styled.button`
+const Button = styled.button`
   border: none;
   background-color: #bbbbbc;
   border-radius: 50%;
@@ -11,14 +11,14 @@ const SliderBtn = styled.button`
   opacity: 0.85;
 `;
 
-const SliderBtnNext = styled(SliderBtn)`
+const BtnNext = styled(Button)`
   padding: 4px 8px 3px 9px;
   position: absolute;
   top: 50%;
   right: 10px;
 `;
 
-const SliderBtnPrev = styled(SliderBtn)`
+const BtnPrev = styled(Button)`
   padding: 4px 10px 3px 9px;
   position: absolute;
   vertical-align:middle;
@@ -26,14 +26,14 @@ const SliderBtnPrev = styled(SliderBtn)`
   left: 10px;
 `;
 
-const BtnSlider = ({moveSlide, direction}) => {
+const SliderBtn = ({moveSlide, direction}) => {
   return direction==='next'
-  ?<SliderBtnNext onClick={moveSlide}>
+  ?<BtnNext onClick={moveSlide}>
     <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
-  </SliderBtnNext>
-  :<SliderBtnPrev onClick={moveSlide}>
+  </BtnNext>
+  :<BtnPrev onClick={moveSlide}>
     <FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
-  </SliderBtnPrev>
+  </BtnPrev>
 };
 
-export default BtnSlider;
+export default SliderBtn;
