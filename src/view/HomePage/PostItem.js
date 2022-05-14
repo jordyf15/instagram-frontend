@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import userImage from '../../assets/profile-test.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as fullHeart } from '@fortawesome/free-solid-svg-icons';
@@ -106,8 +106,9 @@ const PostItemTimestamp = styled.p`
   margin-top: 15px;
 `;
 
-const PostItem = ({post, showPostComments}) => {
+const PostItem = ({post, showPostComments, openOptionModal}) => {
   const dispatch = useDispatch();
+  const user = useSelector((state)=>state.user);
   const handleDislikePost = () => {
     dispatch(deletePostLike({postId: post.id, likeId: post.like.id}))
   };
@@ -123,7 +124,11 @@ const PostItem = ({post, showPostComments}) => {
           <PostItemUserProfileImg src={userImage} alt=''/>
           <PostItemUsername>{post.user.username}</PostItemUsername>
         </PostItemUserInfoContainer>
-        <PostItemOptionsBtn><FontAwesomeIcon icon={faEllipsis}></FontAwesomeIcon></PostItemOptionsBtn>
+        {
+          user.id === post.user.id
+          ?<PostItemOptionsBtn onClick={()=>openOptionModal(post.id)}><FontAwesomeIcon icon={faEllipsis}/></PostItemOptionsBtn>
+          :null
+        }
       </PostItemHeader>
       <VisualMediaSlider visualMediaUrls={post.visual_media_urls}/>
       <PostItemDetailContainer>

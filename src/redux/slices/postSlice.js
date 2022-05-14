@@ -43,9 +43,8 @@ export const updatePost = createAsyncThunk(
   'post/updatePost',
   async({postId, caption}, thunkAPI) => {
     try{
-      const response = await PostService.updatePost({postId, caption});
-      console.log(response);
-      return response.data;
+      await PostService.updatePost({postId, caption});
+      return {postId, caption};
     } catch(error) {
       return thunkAPI.rejectWithValue();
     }
@@ -56,9 +55,8 @@ export const deletePost = createAsyncThunk(
   'post/deletePost',
   async(postId, thunkAPI) => {
     try{
-      const response = await PostService.deletePost(postId);
-      console.log(response);
-      return response.data;
+      await PostService.deletePost(postId);
+      return postId;
     } catch(error) {
       return thunkAPI.rejectWithValue();
     }
@@ -198,6 +196,13 @@ const postSlice = createSlice({
       const postIndex = state.findIndex((post) => post.id === action.payload.postId);
       state[postIndex].comments = state[postIndex].comments
         .filter((comment) => comment.id !== action.payload.commentId);
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      return state.filter((post)=> post.id !== action.payload);
+    },
+    [updatePost.fulfilled]: (state, action) => {
+      const postIndex = state.findIndex((post) => post.id === action.payload.postId);
+      state[postIndex].caption = action.payload.caption;
     }
   },
 });

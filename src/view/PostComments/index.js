@@ -8,9 +8,10 @@ import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import useFocus from '../../customHooks/useFocus';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePostLike, getPostComments, likePost } from '../../redux/slices/postSlice';
+import { deletePost, deletePostLike, getPostComments, likePost } from '../../redux/slices/postSlice';
 import CommentOptionModal from './CommentOptionModal';
-import PostOptionModal from './PostOptionModal';
+import PostOptionModal from '../../components/PostOptionModal';
+import EditPostModal from '../EditPostModal';
 
 const Background = styled.div`
   width: 100vw;
@@ -143,8 +144,11 @@ const getTimeStamp = (timeStampStr) => {
 
 const PostComments = ({postId, close}) => {
   const [chosenComment, setChosenComment] = useState(null);
+  const [showPostOptionModal, setShowPostOptionModal] = useState(false);
+  const [showEditPostModal, setShowEditPostModal] = useState(false);
   const dispatch = useDispatch();
   const post = useSelector((state)=>state.post.filter((p)=>p.id===postId)[0]);
+  const user = useSelector((state)=>state.user);
   const [inputRef, setInputFocus] = useFocus();
   const handleClickContainer = (e) => {
     e.stopPropagation();
@@ -166,11 +170,43 @@ const PostComments = ({postId, close}) => {
     setChosenComment(null);
   };
 
+  const openPostOptionModal = () => {
+    setShowPostOptionModal(true);
+  };
+
+  const closePostOptionModal = () => {
+    setShowPostOptionModal(false);
+  };
+
+  const handleDeletePost = async() => {
+    await dispatch(deletePost(post.id));
+    closePostOptionModal();
+    close();
+  }
+
+  const openEditPostModal = () => {
+    setShowEditPostModal(true);
+  };
+
+  const closeEditPostModal = () => {
+    setShowEditPostModal(false);
+  };
+
   return (
     <Background onClick={close}>
       {
         chosenComment
         ?<CommentOptionModal comment={chosenComment} closeModal={closeCommentOptionModal}/>
+        :null
+      }
+      {
+        showPostOptionModal
+        ?<PostOptionModal closeModal={closePostOptionModal} openEditModal={openEditPostModal} handleDelete={handleDeletePost}/>
+        :null
+      }
+      {
+        showEditPostModal
+        ?<EditPostModal closeModal={closeEditPostModal} postId={postId}/>
         :null
       }
       <CloseModalBtn onClick={close}><FontAwesomeIcon icon={faXmark}/></CloseModalBtn>
@@ -180,7 +216,11 @@ const PostComments = ({postId, close}) => {
             <PostUserProfileImg src={userImage} alt=''/>
             <PostUsername>{post.user.username}</PostUsername>
           </UserInfoContainer>
-          <OptionsBtn><FontAwesomeIcon icon={faEllipsis}/></OptionsBtn>
+          {
+            post.user.id === user.id
+            ?<OptionsBtn onClick={openPostOptionModal}><FontAwesomeIcon icon={faEllipsis}/></OptionsBtn>
+            :null
+          }
         </Header>
         <CommentList setChosenComment={setChosenComment} comments={post.comments} profileImgUrl={post.user.profile_pictures} username={post.user.username}
           caption={post.caption} timestamp={post.updated_date}/>

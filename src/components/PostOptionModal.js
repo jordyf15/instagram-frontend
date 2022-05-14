@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Background = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0,0,0,0.6);
@@ -11,6 +11,7 @@ const Background = styled.div`
   align-items: center;
   top: 0;
   left: 0;
+  z-index: 3;
 `;
 
 const Container = styled.div`
@@ -44,13 +45,27 @@ const DeleteBtn = styled(Button)`
 `;
 
 
-const PostOptionModal = () => {
+const PostOptionModal = ({closeModal, handleDelete, openEditModal}) => {
+  const handleClickBackground = (e) => {
+    e.stopPropagation();
+    closeModal();
+  };
+
+  const handleClickContainer = (e) => {
+    e.stopPropagation();
+  };
+
+  const handleClickEdit = () => {
+    openEditModal();
+    closeModal();
+  }
+
   return(
-    <Background>
-      <Container>
-        <DeleteBtn>Delete</DeleteBtn>
-        <EditBtn>Edit</EditBtn>
-        <Button>Cancel</Button>
+    <Background onClick={handleClickBackground}>
+      <Container onClick={handleClickContainer}>
+        <DeleteBtn onClick={handleDelete}>Delete</DeleteBtn>
+        <EditBtn onClick={handleClickEdit}>Edit</EditBtn>
+        <Button onClick={closeModal}>Cancel</Button>
       </Container>
     </Background>
   )

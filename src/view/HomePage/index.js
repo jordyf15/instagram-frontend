@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getPosts } from '../../redux/slices/postSlice';
+import PostOptionModal from '../../components/PostOptionModal';
+import { deletePost, getPosts } from '../../redux/slices/postSlice';
+import EditPostModal from '../EditPostModal';
 import Layout from '../Layout';
 import PostComments from '../PostComments';
 import PostItem from './PostItem';
@@ -14,7 +16,9 @@ const PostList = styled.ul`
 `;
 
 const HomePage = () => {
-  const [currentPostId, setCurrentPostId] = useState('');
+  const [currentPostDetailId, setCurrentPostDetailId] = useState('');
+  const [currentPostOptionId, setCurrentPostOptionId] = useState('');
+  const [currentPostEditId, setCurrentPostEditId] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const posts = useSelector((state) => state.post);
@@ -28,21 +32,53 @@ const HomePage = () => {
   }, [isLoggedIn, navigate]);
 
   const showPostComments = (postId) => {
-    setCurrentPostId(postId);
-  }
+    setCurrentPostDetailId(postId);
+  };
 
   const closePostComments = () => {
-    setCurrentPostId('');
-  }
+    setCurrentPostDetailId('');
+  };
+
+  const openPostOptionModal = (postId) => {
+    setCurrentPostOptionId(postId);
+  };
+
+  const closePostOptionModal = () => {
+    setCurrentPostOptionId('');
+  };
+
+  const handleDeletePost = async() => {
+    await dispatch(deletePost(currentPostOptionId));
+    closePostOptionModal();
+  };
+
+  const openEditPostModal = () => {
+    setCurrentPostEditId(currentPostOptionId);
+  };
+
+  const closeEditPostModal = () => {
+    setCurrentPostEditId('');
+  };
 
   return(
     <Layout> 
-      {currentPostId
-      ?<PostComments close={closePostComments} postId={currentPostId}/>
-      :null}
-   
+      {
+      currentPostDetailId
+      ?<PostComments close={closePostComments} postId={currentPostDetailId}/>
+      :null
+      }
+      {
+        currentPostOptionId
+        ?<PostOptionModal closeModal={closePostOptionModal} handleDelete={handleDeletePost} openEditModal={openEditPostModal}/>
+        :null
+      }
+      {
+        currentPostEditId
+        ?<EditPostModal postId={currentPostEditId} closeModal={closeEditPostModal}/>
+        :null
+      }
       <PostList>
-        {posts.map((post)=><PostItem showPostComments={showPostComments} post={post} key={post.id}/>)}
+        {posts.map((post)=><PostItem openOptionModal={openPostOptionModal} showPostComments={showPostComments} post={post} key={post.id}/>)}
       </PostList>
     </Layout>
   )
