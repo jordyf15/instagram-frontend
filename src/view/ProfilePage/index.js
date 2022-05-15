@@ -146,11 +146,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if(!isLoggedIn) navigate('/login');
-  }, [isLoggedIn, navigate]);
-
-  useEffect(() => {
-    dispatch(getUserPosts())
-  }, [dispatch]);
+    else dispatch(getUserPosts());
+  }, [isLoggedIn, navigate, dispatch]);
 
   const openPostDetail = (postId) => {
     setSelectedPostId(postId);

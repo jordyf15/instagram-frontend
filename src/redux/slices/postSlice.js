@@ -150,6 +150,11 @@ export const deleteComment = createAsyncThunk(
 const postSlice = createSlice({
   name: 'post',
   initialState: [],
+  reducers: {
+    setPosts: (state, action) => {
+      return action.payload;
+    },
+  },
   extraReducers: {
     [getPosts.fulfilled]: (state, action) => {
       return action.payload.posts;
@@ -207,4 +212,5 @@ const postSlice = createSlice({
   },
 });
 
+export const { setPosts } = postSlice.actions;
 export default postSlice.reducer;

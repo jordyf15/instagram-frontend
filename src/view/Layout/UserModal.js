@@ -1,8 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/slices/authenticationSlice';
+import { setUser } from '../../redux/slices/userSlice';
+import { setPosts } from '../../redux/slices/postSlice';
 
 const ProfileLink = styled(Link)`
   color: black;
@@ -66,9 +70,20 @@ const ProfileText = styled.span`
 `;
 
 const UserModal = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleClick = (e) => {
     e.stopPropagation();
-  }
+  };
+
+  const handleLogout = async() => {
+    await dispatch(logout());
+    navigate('/login');
+    dispatch(setUser(null));
+    dispatch(setPosts([]));
+  };
+
   return(
     <Container onClick={handleClick}>
       <Triangle></Triangle>
@@ -76,7 +91,7 @@ const UserModal = () => {
         <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>
         <ProfileText>Profile</ProfileText>
       </ProfileLink>
-      <LogoutBtn>Log Out</LogoutBtn>
+      <LogoutBtn onClick={handleLogout}>Log Out</LogoutBtn>
     </Container>
   )
 };

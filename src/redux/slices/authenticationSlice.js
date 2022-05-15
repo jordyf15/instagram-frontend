@@ -16,6 +16,14 @@ export const login  = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  "authentication/logout",
+  async(_,thunkAPI) => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
+  }
+);
+
 const authenticationSlice = createSlice({
   name: 'authentication',
   initialState: {
@@ -24,6 +32,9 @@ const authenticationSlice = createSlice({
   extraReducers: {
     [login.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
+    },
+    [logout.fulfilled]: (state, action) => {
+      state.isLoggedIn = false;
     },
   }
 });

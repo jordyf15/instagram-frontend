@@ -23,13 +23,11 @@ const HomePage = () => {
   const navigate = useNavigate();
   const posts = useSelector((state) => state.post);
   const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
-  useEffect(() => {
-    dispatch(getPosts())
-  }, [dispatch]);
 
   useEffect(() => {
     if(!isLoggedIn) navigate('/login')
-  }, [isLoggedIn, navigate]);
+    else dispatch(getPosts());
+  }, [isLoggedIn, navigate, dispatch]);
 
   const showPostComments = (postId) => {
     setCurrentPostDetailId(postId);
@@ -61,7 +59,8 @@ const HomePage = () => {
   };
 
   return(
-    <Layout> 
+    isLoggedIn
+    ?<Layout> 
       {
       currentPostDetailId
       ?<PostDetail close={closePostComments} postId={currentPostDetailId}/>
@@ -81,6 +80,7 @@ const HomePage = () => {
         {posts.map((post)=><PostItem openOptionModal={openPostOptionModal} showPostComments={showPostComments} post={post} key={post.id}/>)}
       </PostList>
     </Layout>
+    :null
   )
 };
 
