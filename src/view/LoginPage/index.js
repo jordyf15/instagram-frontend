@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { login } from '../../redux/slices/authenticationSlice';
+import { login } from '../../redux/slices/userSlice';
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -84,15 +84,16 @@ const LoginPage = () => {
   const [validSubmit, setValidSubmit] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
 
   useEffect(() => {
     setValidSubmit(username !== '' && password !== '');
   }, [username, password]);
 
   useEffect(() => {
-    if(isLoggedIn) navigate('/');
-  }, [isLoggedIn, navigate]);
+    if(localStorage.getItem("access_token") && localStorage.getItem('user')) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

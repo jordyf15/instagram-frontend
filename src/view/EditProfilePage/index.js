@@ -7,8 +7,7 @@ import ChangeProfilePicModal from './ChangeProfilePicModal';
 import ImageInput from './ImageInput';
 import PasswordInput from './PasswordInput';
 import TextInput from './TextInput';
-import { updateProfile } from '../../redux/slices/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { updateProfile } from '../../redux/slices/userSlice';;
 
 const Main = styled.main`
   background-color: white;
@@ -140,20 +139,22 @@ const DisabledSubmitBtn = styled(SubmitBtn)`
 
 const EditProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
   const user = useSelector((state)=>state.user);
-  const [fullname, setFullname] = useState(user.fullname);
-  const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
+  const [fullname, setFullname] = useState(user.fullname ?? '');
+  const [username, setUsername] = useState(user.username ?? '');
+  const [email, setEmail] = useState(user.email ?? '');
   const [password, setPassword] = useState('');
   const [profilePictures, setProfilePictures] = useState(user.profile_pictures);
   const [validSubmit, setValidSubmit] = useState(false);
   const [showChangeProfilePicModal, setShowChangeProfilePicModal] = useState(false);
 
   useEffect(() => {
-    if(!isLoggedIn) navigate('/login');
-  }, [isLoggedIn, navigate])
+    setUsername(user.username ?? '');
+    setFullname(user.fullname ?? '');
+    setEmail(user.email ?? '');
+    setProfilePictures(user.profile_pictures);
+    setPassword('');
+  }, [user]);
 
   const closeChangeProfilePicModal = () => {
     setShowChangeProfilePicModal(false);

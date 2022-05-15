@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../../redux/slices/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
@@ -103,11 +103,12 @@ const RegisterPage = () => {
   const [validSubmit, setValidSubmit] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
 
   useEffect(() => {
-    if(isLoggedIn) navigate('/');
-  }, [isLoggedIn, navigate]);
+    if(localStorage.getItem("access_token") && localStorage.getItem('user')) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     setValidSubmit(!usernameError && !fullnameError && !emailError && !passwordError && 

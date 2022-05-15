@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Layout from '../Layout';
 import userImage from '../../assets/profile-test.jpg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PostList from './PostList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserPosts } from '../../redux/slices/postSlice';
@@ -140,14 +140,11 @@ const ProfilePage = () => {
   const user = useSelector((state) => state.user);
   const [selectedPostId, setSelectedPostId] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.authentication.isLoggedIn);
   const myPosts = useSelector((state) => state.post);
 
   useEffect(() => {
-    if(!isLoggedIn) navigate('/login');
-    else dispatch(getUserPosts());
-  }, [isLoggedIn, navigate, dispatch]);
+    dispatch(getUserPosts());
+  }, [dispatch]);
 
   const openPostDetail = (postId) => {
     setSelectedPostId(postId);

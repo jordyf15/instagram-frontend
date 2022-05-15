@@ -4,7 +4,7 @@ import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/slices/authenticationSlice';
+import { logout } from '../../redux/slices/userSlice';
 import { setUser } from '../../redux/slices/userSlice';
 import { setPosts } from '../../redux/slices/postSlice';
 
