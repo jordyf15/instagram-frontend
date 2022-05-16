@@ -13,6 +13,7 @@ const Background = styled.div`
   align-items: center;
   top: 0;
   left: 0;
+  z-index: 3;
 `;
 
 const Container = styled.div`
@@ -28,17 +29,19 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-background: none;
-border:none;
-font-family: 'Roboto';
-padding: 15px 0;
-font-size: 0.9em;
+  background: none;
+  border:none;
+  font-family: 'Roboto';
+  padding: 15px 0;
+  font-size: 0.9em;
+  cursor: pointer;
 `;
 
 const DeleteBtn = styled(Button)`
   font-weight: bold;
   color: #ed4956;
   border-bottom: 1px solid #dbdbdb;
+  cursor: pointer;
 `;
 
 const CommentOptionModal = ({comment, closeModal}) => {

@@ -37,6 +37,7 @@ const CloseBtn = styled.button`
   position: absolute;
   top: 15px;
   right: 15px;
+  cursor: pointer;
 `;
 
 const Container = styled.div`
@@ -69,6 +70,7 @@ const BackBtn = styled.button`
   border:none;
   background: none;
   font-size: 1.5em;
+  cursor: pointer;
 `;
 
 const ShareBtn = styled.button`
@@ -78,6 +80,7 @@ const ShareBtn = styled.button`
   color: #0095f6;
   font-weight: bold;
   font-family: 'Roboto';
+  cursor: pointer;
 `;
 const CreatePostModal = ({closeCreatePostModal}) => {
   const [visualMedias, setVisualMedias] = useState([]);

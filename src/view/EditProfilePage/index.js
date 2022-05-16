@@ -66,6 +66,7 @@ const ChangeProfilePicBtn = styled.button`
   background: none;
   padding: 0;
   color: #0095f6;
+  cursor: pointer;
 `;
 
 const Info = styled.p`

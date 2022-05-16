@@ -22,7 +22,7 @@ const ProfileLink = styled(Link)`
 const Container = styled.div`
   position: absolute;
   bottom: -75px;
-  right: 0;
+  right: 20px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -39,6 +39,7 @@ const LogoutBtn = styled.button`
   text-align: left;
   padding: 10px 15px;
   font-size: 0.65em;
+  cursor: pointer;
   &:hover{
     background-color: #fafafa;
   }

@@ -75,6 +75,7 @@ const CloseModalBtn = styled.button`
   position: absolute;
   top: 15px;
   right: 15px;
+  cursor: pointer;
 `;
 
 const Header = styled.div`
@@ -105,6 +106,7 @@ const OptionsBtn = styled.button`
   background: none;
   border: none;
   font-size: 1.2em;
+  cursor: pointer;
 `;
 
 const WidgetContainer = styled.div`
@@ -119,6 +121,7 @@ const ToggleLikeBtn = styled.button`
   background:none;
   font-size: 1.5em;
   padding: 0;
+  cursor: pointer;
 `;
 
 const CommentBtn = styled.button`
@@ -127,6 +130,7 @@ const CommentBtn = styled.button`
   font-size: 1.5em;
   padding: 0;
   margin-left: 15px;
+  cursor: pointer;
 `;
 
 const LikeCount = styled.p`

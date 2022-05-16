@@ -11,12 +11,14 @@ const UpdatePhotoLabel = styled.label`
   padding: 15px 0;
   display: block;
   text-align: center;
+  cursor: pointer;
 `; 
 
 const InputPhotoLabel = styled.label`
   font-weight: bold;
   font-size: 0.85em;
   color: #0095f6;
+  cursor: pointer;
 `;
 
 const FileInput = styled.input`

@@ -26,6 +26,7 @@ const Nav = styled.nav`
   font-size: 1.4em;
   display: flex;
   align-items: center;
+  margin-right: 20px;
 `;
 
 const HeaderIcons = styled(FontAwesomeIcon)`
@@ -38,6 +39,7 @@ const CreatePostModalBtn = styled.button`
   background: none;
   font-size: 1.2em;
   padding: 0;
+  cursor: pointer;
 `;
 
 const UserModalBtn = styled.button`
@@ -45,6 +47,7 @@ const UserModalBtn = styled.button`
   background: none;
   font-size: 1.2em;
   padding: 0;
+  cursor: pointer;
 `;
 
 const Header = ({showUserModal, openUserModal, openCreatePostModal}) => {

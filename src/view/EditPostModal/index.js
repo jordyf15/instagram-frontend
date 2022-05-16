@@ -41,6 +41,7 @@ const CancelBtn = styled.button`
   font-family: 'Roboto';
   font-size: 0.9em;
   margin-left: 10px;
+  cursor: pointer;
 `;
 
 const DoneBtn = styled.button`
@@ -51,6 +52,7 @@ const DoneBtn = styled.button`
   color: #0095f6;
   font-weight: bold;
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 const H3 = styled.h3`

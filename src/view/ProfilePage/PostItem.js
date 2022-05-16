@@ -8,6 +8,7 @@ import { requestImageUrl } from '../../utils/imageRequest';
 const Container = styled.li`
   position: relative;
   max-width: 300px;
+  cursor: pointer;
 `;
 
 const PostImg = styled.img`

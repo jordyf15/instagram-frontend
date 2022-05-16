@@ -65,6 +65,7 @@ const PostItemOptionsBtn = styled.button`
   border:none;
   background: none;
   font-size: 1.3em;
+  cursor: pointer;
 `;
 
 const PostItemDetailContainer = styled.div`
@@ -76,12 +77,14 @@ const PostItemToggleLikeBtn = styled.button`
   border:none;
   font-size: 1.5em;
   margin-right: 8px;
+  cursor: pointer;
 `;
 
 const PostItemCommentBtn = styled.button`
   background: none;
   border:none;
   font-size: 1.5em;
+  cursor: pointer;
 `;
 
 const PostItemLikeCount = styled.p`

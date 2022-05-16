@@ -41,6 +41,7 @@ const DiscardBtn = styled.button`
   font-weight: bolder;
   color: #ed4956;
   font-size: 0.9em;
+  cursor: pointer;
 `;
 
 const CancelBtn = styled.button`
@@ -49,6 +50,7 @@ const CancelBtn = styled.button`
   border-top: 1px solid #dbdbdb;
   padding: 15px 0;
   font-family: 'Roboto';
+  cursor: pointer;
 `;
 
 const DiscardPostModal = ({hideDiscardPostModal, emptyVisualMedias}) => {

@@ -42,6 +42,7 @@ const RemovePicBtn = styled.button`
   font-family: 'Roboto';
   color: #ed4956;
   padding: 15px 0;
+  cursor: pointer;
 `;
 
 const CancelBtn = styled.button`
@@ -51,6 +52,7 @@ const CancelBtn = styled.button`
   font-size: 0.9em;
   border-top: 1px solid #dbdbdb;
   padding: 15px 0;
+  cursor: pointer;
 `;
 
 const ChangeProfilePicModal = ({handleChange, closeModal}) => {

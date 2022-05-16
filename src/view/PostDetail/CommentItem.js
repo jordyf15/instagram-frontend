@@ -42,6 +42,7 @@ const OptionBtn = styled.button`
   color: #8e8e8e;
   font-size: 1em;
   margin-left:5px;
+  cursor: pointer;
 `;
 
 const ToggleLikeBtn = styled.button`
@@ -50,6 +51,7 @@ const ToggleLikeBtn = styled.button`
   padding: 0;
   margin-top: 5px;
   font-size: 0.8em;
+  cursor: pointer;
 `;
 
 const getTimeStamp = (timeStampStr) => {
