@@ -33,6 +33,7 @@ export const updateProfile = createAsyncThunk(
   async ({username, fullname, password, email, profilePic, userId}, thunkAPI) => {
     try {
       const response = await UserService.updateProfile({username, fullname, password, email, profilePic, userId});
+      localStorage.setItem('user', JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue();

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import userImage from '../../assets/profile-test.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as fullHeart } from '@fortawesome/free-solid-svg-icons';
 import { faComment, faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
 import VisualMediaSlider from '../../components/visualMediaSlider';
 import PostCommentForm from './PostCommentForm';
 import { deletePostLike, likePost } from '../../redux/slices/postSlice';
+import { DEFAULT_PROFILE_PICTURE_LINK, requestImageUrl } from '../../utils/imageRequest';
 
 const getTimeStamp = (timeStampStr) => {
   const timeStamp = new Date(timeStampStr).getTime();
@@ -121,7 +121,11 @@ const PostItem = ({post, showPostComments, openOptionModal}) => {
     <PostItemContainer>
       <PostItemHeader>
         <PostItemUserInfoContainer>
-          <PostItemUserProfileImg src={userImage} alt=''/>
+          {
+            post.user.profile_pictures
+            ?<PostItemUserProfileImg src={requestImageUrl(post.user.profile_pictures[0].url)} alt=''/>
+            :<PostItemUserProfileImg src={requestImageUrl(DEFAULT_PROFILE_PICTURE_LINK)} alt=''/>
+          }
           <PostItemUsername>{post.user.username}</PostItemUsername>
         </PostItemUserInfoContainer>
         {

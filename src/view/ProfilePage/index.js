@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Layout from '../Layout';
-import userImage from '../../assets/profile-test.jpg';
 import { Link } from 'react-router-dom';
 import PostList from './PostList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserPosts } from '../../redux/slices/postSlice';
 import PostDetail from '../PostDetail';
+import { DEFAULT_PROFILE_PICTURE_LINK, requestImageUrl } from '../../utils/imageRequest';
 
 const Main = styled.main`
   flex-grow: 1;
@@ -164,7 +164,11 @@ const ProfilePage = () => {
         }
         <UpperContainer>
           <UserProfileImgContainer>
-            <UserProfileImg src={userImage} alt=''/>
+            {
+              user.profile_pictures
+              ?<UserProfileImg src={requestImageUrl(user.profile_pictures[1].url)} alt=''/>
+              :<UserProfileImg src={requestImageUrl(DEFAULT_PROFILE_PICTURE_LINK)} alt=''/>
+            }
           </UserProfileImgContainer>
           <MainInfoContainer>
             <Username>{user.username}</Username>

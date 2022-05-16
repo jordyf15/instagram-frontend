@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CommentItem from './CommentItem';
-import userImage from '../../assets/profile-test.jpg';
+import { DEFAULT_PROFILE_PICTURE_LINK, requestImageUrl } from '../../utils/imageRequest';
 
 const CommentListContainer = styled.div`
   flex-grow:1;
@@ -63,18 +63,22 @@ const getTimeStamp = (timeStampStr) => {
   }
 }
 
-const CommentList = ({comments, username, caption, timestamp, setChosenComment}) => {
+const CommentList = ({post, caption, timestamp, setChosenComment}) => {
   return(
     <CommentListContainer>
       <PostContainer>
-        <PostUserProfileImg src={userImage} alt=''/>
+        {
+          post.user.profile_pictures
+          ?<PostUserProfileImg src={requestImageUrl(post.user.profile_pictures[0].url)} alt=''/>
+          :<PostUserProfileImg src={requestImageUrl(DEFAULT_PROFILE_PICTURE_LINK)} alt=''/>
+        }
         <PostDetailContainer>
-          <PostDetail><strong>{username}</strong> {caption}</PostDetail>
+          <PostDetail><strong>{post.user.username}</strong> {caption}</PostDetail>
           <Timestamp>{getTimeStamp(timestamp)}</Timestamp>
         </PostDetailContainer>
       </PostContainer>
       <CommentListUl>
-        {comments && comments.map((comment)=><CommentItem setChosenComment={setChosenComment} key={comment.id} comment={comment}/>)}
+        {post.comments && post.comments.map((comment)=><CommentItem setChosenComment={setChosenComment} key={comment.id} comment={comment}/>)}
       </CommentListUl>
     </CommentListContainer>
   )

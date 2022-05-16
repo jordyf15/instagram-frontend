@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import userImage from '../../assets/profile-test.jpg';
+import { requestImageUrl } from '../../utils/imageRequest';
 import SliderBtn from './SliderBtn';
 import SliderDot from './SliderDot';
 
@@ -45,7 +45,7 @@ const VisualMediaSlider = ({visualMediaUrls}) => {
   };
   return(
     <Container>
-      <Img src={userImage} alt=''/>
+      <Img src={requestImageUrl(visualMediaUrls[slideIndex])} alt=''/>
       <BtnContainer>
         {slideIndex!==0
         ?<SliderBtn moveSlide={prevSlide} direction='prev'/>

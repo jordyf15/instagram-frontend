@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
-import userImage from '../../assets/profile-test.jpg';
 import { useSelector } from 'react-redux';
+import { requestImageUrl } from '../../utils/imageRequest';
 
 const Container = styled.li`
   position: relative;
@@ -12,6 +12,7 @@ const Container = styled.li`
 
 const PostImg = styled.img`
   width: 100%;
+  height: 100%;
 `;
 
 const ViewPostBtn = styled.button`
@@ -59,7 +60,7 @@ const PostItem = ({postId, openPostDetail}) => {
 
   return (
     <Container onClick={()=>openPostDetail(postId)}>
-      <PostImg src={userImage} alt=''/>
+      <PostImg src={requestImageUrl(post.visual_media_urls[0])} alt=''/>
       <ViewPostBtn>
         <LikeCount><FontAwesomeIcon icon={faHeart}/> {post.like_count}</LikeCount>
         <CommentCount><FontAwesomeIcon icon={faComment}/> {post.comment_count}</CommentCount>

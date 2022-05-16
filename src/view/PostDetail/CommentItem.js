@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fullHeart, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
 import styled from 'styled-components';
-import userImage from '../../assets/profile-test.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCommentLike, likeComment } from '../../redux/slices/postSlice';
+import { DEFAULT_PROFILE_PICTURE_LINK, requestImageUrl } from '../../utils/imageRequest';
 
 const Container = styled.div`
   display: flex;
@@ -94,7 +94,11 @@ const CommentItem = ({comment, setChosenComment}) => {
 
   return(
     <Container>
-      <UserProfilePic src={userImage} alt=''/>
+      {
+        comment.user.profile_pictures
+        ?<UserProfilePic src={requestImageUrl(comment.user.profile_pictures[0].url)} alt=''/>
+        :<UserProfilePic src={requestImageUrl(DEFAULT_PROFILE_PICTURE_LINK)} alt=''/>
+      }
       <DetailContainer>
         <Detail><strong>{comment.user.username}</strong> {comment.comment}</Detail>
         <Timestamp>{getTimeStamp(comment.updated_date)}</Timestamp>

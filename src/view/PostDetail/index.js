@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faEllipsis, faHeart as fullHeart } from '@fortawesome/free-solid-svg-icons';
 import { faComment, faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
-import userImage from '../../assets/profile-test.jpg';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import useFocus from '../../customHooks/useFocus';
@@ -13,6 +12,7 @@ import CommentOptionModal from './CommentOptionModal';
 import PostOptionModal from '../../components/PostOptionModal';
 import EditPostModal from '../EditPostModal';
 import VisualMediaSlider from '../../components/visualMediaSlider';
+import { DEFAULT_PROFILE_PICTURE_LINK, requestImageUrl } from '../../utils/imageRequest';
 
 const Background = styled.div`
   width: 100vw;
@@ -238,7 +238,11 @@ const PostDetail = ({postId, close}) => {
         <CommentsContainer>
           <Header>
             <UserInfoContainer>
-              <PostUserProfileImg src={userImage} alt=''/>
+              {
+                post.user.profile_pictures
+                ?<PostUserProfileImg src={requestImageUrl(post.user.profile_pictures[0].url)} alt=''/>
+                :<PostUserProfileImg src={requestImageUrl(DEFAULT_PROFILE_PICTURE_LINK)} alt=''/>
+              }
               <PostUsername>{post.user.username}</PostUsername>
             </UserInfoContainer>
             {
@@ -247,7 +251,7 @@ const PostDetail = ({postId, close}) => {
               :null
             }
           </Header>
-              <CommentList setChosenComment={setChosenComment} comments={post.comments} profileImgUrl={post.user.profile_pictures} username={post.user.username}
+              <CommentList setChosenComment={setChosenComment} post={post} profileImgUrl={post.user.profile_pictures}
                 caption={post.caption} timestamp={post.updated_date}/>
               <WidgetContainer>
                 {post.like

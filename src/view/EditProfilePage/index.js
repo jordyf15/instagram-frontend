@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import userImage from '../../assets/profile-test.jpg';
 import Layout from '../Layout';
 import ChangeProfilePicModal from './ChangeProfilePicModal';
 import ImageInput from './ImageInput';
 import PasswordInput from './PasswordInput';
 import TextInput from './TextInput';
-import { updateProfile } from '../../redux/slices/userSlice';;
+import { updateProfile } from '../../redux/slices/userSlice';
+import { requestImageUrl } from '../../utils/imageRequest';
 
 const Main = styled.main`
   background-color: white;
@@ -204,7 +204,12 @@ const EditProfilePage = () => {
           :null
         }        
         <ProfilePicContainer>
-          <ProfilePic src={userImage} alt=''/>
+          {
+            user.profile_pictures
+            ?<ProfilePic key={user.profile_pictures[0].url} src={requestImageUrl(user.profile_pictures[0].url)} alt=''/>
+            :<ProfilePic key='./profile_pictures/small-default-profile.jpg' src={requestImageUrl('./profile_pictures/small-default-profile.jpg')} alt=''/>
+          }
+          
           <ChangeProfilePicContainer>
             <Username>{user.username}</Username>
             {user.profile_pictures

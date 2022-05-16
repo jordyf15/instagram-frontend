@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import userImage from '../../assets/profile-test.jpg';
 import TextArea from './TextArea';
 import { updatePost } from '../../redux/slices/postSlice';
+import { DEFAULT_PROFILE_PICTURE_LINK, requestImageUrl } from '../../utils/imageRequest';
 
 const Background = styled.div`
   position: fixed;
@@ -110,7 +110,11 @@ const EditPostModal = ({postId, closeModal}) => {
           <DoneBtn onClick={handleDone}>Done</DoneBtn>
         </Header>
         <UserInfoContainer>
-          <UserImg src={userImage} alt=''/>
+          {
+            post.user.profile_pictures
+            ?<UserImg src={requestImageUrl(post.user.profile_pictures[0].url)} alt=''/>
+            :<UserImg src={requestImageUrl(DEFAULT_PROFILE_PICTURE_LINK)} alt=''/>
+          }
           <Username>{post.user.username}</Username>
         </UserInfoContainer>
         <div>

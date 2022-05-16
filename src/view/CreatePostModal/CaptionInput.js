@@ -1,6 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import profileTest from '../../assets/profile-test.jpg';
+import { DEFAULT_PROFILE_PICTURE_LINK, requestImageUrl } from '../../utils/imageRequest';
 
 const TextareaContainer = styled.div`
   display: flex;
@@ -46,11 +47,16 @@ const TextCount = styled.span`
 `;
 
 const CaptionInput = ({value, handleChange}) => {
+  const user = useSelector((state)=>state.user);
   return(
     <TextareaContainer>
       <TextareaHeader>
-        <UserProfilePic src={profileTest} alt='user-profile-pic'/>
-        <Username>jordivh</Username>
+        {
+          user.profile_pictures
+          ?<UserProfilePic src={requestImageUrl(user.profile_pictures[0].url)} alt='user-profile-pic'/>
+          :<UserProfilePic src={requestImageUrl(DEFAULT_PROFILE_PICTURE_LINK)} alt='user-profile-pic'/>
+        }
+        <Username>{user.username}</Username>
       </TextareaHeader>
       <TextareaCaption onChange={({target}) => handleChange(target.value)} placeholder='Write a caption...'/>
       <TextCount>{value.length} / 2200</TextCount>
