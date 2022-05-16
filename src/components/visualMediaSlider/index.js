@@ -7,10 +7,14 @@ import SliderDot from './SliderDot';
 const Container = styled.div`
   position:relative;
   width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 `;
 
 const Img = styled.img`
   width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 `;
 
 const BtnContainer = styled.div`

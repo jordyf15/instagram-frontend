@@ -60,6 +60,7 @@ const VisualMediaContainer = styled.div`
   flex-grow: 1;
   background-color: black;
   display: none;
+  max-width: 500px;
   @media (min-width: 730px) {
     display: flex;
     align-items: center;
