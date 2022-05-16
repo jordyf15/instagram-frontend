@@ -21,7 +21,8 @@ const Layout = ({children}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(localStorage.getItem("access_token") && localStorage.getItem('user')) {
+    if(localStorage.getItem("access_token") && localStorage.getItem('user') 
+    && localStorage.getItem('expiry') && new Date().getMilliseconds() < JSON.parse(localStorage.getItem('expiry'))) {
       const user = JSON.parse(localStorage.getItem("user"));
       dispatch(setUser(user));
     } else {

@@ -60,6 +60,8 @@ export const login  = createAsyncThunk(
       const response = await AuthService.login(username, password);
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      const expiry = new Date().getMilliseconds() + 60000*30
+      localStorage.setItem('expiry', JSON.stringify(expiry));
       return response.data;
     } catch(error) {
       return thunkAPI.rejectWithValue(error.response.data.message);
@@ -72,6 +74,7 @@ export const logout = createAsyncThunk(
   async(_,thunkAPI) => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
+    localStorage.removeItem('expiry');
   }
 );
 

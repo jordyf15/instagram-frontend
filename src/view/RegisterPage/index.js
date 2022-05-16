@@ -105,7 +105,8 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(localStorage.getItem("access_token") && localStorage.getItem('user')) {
+    if(localStorage.getItem("access_token") && localStorage.getItem('user') 
+    && localStorage.getItem('expiry') && new Date().getMilliseconds() < JSON.parse(localStorage.getItem('expiry'))) {
       navigate('/');
     }
   }, [navigate]);
